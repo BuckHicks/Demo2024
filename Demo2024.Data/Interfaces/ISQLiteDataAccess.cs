@@ -1,0 +1,13 @@
+﻿using System;
+using System.Data;
+using System.Linq;
+
+namespace Demo2024.Data.Interfaces;
+
+public interface ISQLiteDataAccess
+{
+    DataSet ExecuteQuery(string query);
+    DataSet ExecuteQuery(string query, params IDataParameter[] parameters);
+    bool ExecuteNonQuery(string query);
+    bool ExecuteNonQuery(string query, params IDataParameter[] parameters);
+}
