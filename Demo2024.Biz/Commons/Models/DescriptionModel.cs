@@ -1,9 +1,11 @@
-﻿namespace Demo2024.Biz.Commons.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public class DescriptionModel : ObservableObject
+namespace Demo2024.Biz.Commons.Models;
+
+public partial class DescriptionModel : ObservableObject
 {
-    private int _id;
-    private string _text;
+    [ObservableProperty] private int id;
+    [ObservableProperty] private string text;
 
     public DescriptionModel(string text)
     {
@@ -14,30 +16,5 @@ public class DescriptionModel : ObservableObject
     {
         Id = id;
         Text = text;
-    }
-
-    public int Id
-    {
-        get { return _id; }
-        set
-        {
-            if(_id != value)
-            {
-                _id = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    public string Text { 
-        get { return _text; }
-        set 
-        {
-            if(_text != value)
-            {
-                _text = value;
-                OnPropertyChanged();
-            }
-        }
     }
 }

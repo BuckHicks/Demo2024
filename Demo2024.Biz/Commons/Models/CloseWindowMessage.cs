@@ -1,4 +1,6 @@
-﻿namespace Demo2024.Biz.Commons.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Demo2024.Biz.Commons.Models;
 
 public class CloseWindowMessage
 {

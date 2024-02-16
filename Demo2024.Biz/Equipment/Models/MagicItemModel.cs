@@ -1,53 +1,55 @@
-﻿using Demo2024.Biz.Commons.Interfaces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.Equipment.Interfaces;
-using Demo2024.Biz.Equipment.Models;
-//using GalaSoft.MvvmLight.Command;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace Demo2024.Biz.Equipment.Models
 {
-    public class MagicItemModel : ObservableObject, IMagicItemModel
+    public partial class MagicItemModel : ObservableObject, IMagicItemModel
     {
         //**************************************************\\
         //********************* Fields *********************\\
         //**************************************************\\
         private bool _isDataComplete;
-        private string _name;
-        private IList<DescriptionModel> _description;
-        private IList<string> _stringdescription;
-        private ICategoryModel _equipmentCategory;
+        private IList<string> _stringDescription;
 
-        private string _armorIconPath = "/Demo2020;component/Resources/Images/ArmorIcon.png";
-        private string _arrowsIconPath = "/Demo2020;component/Resources/Images/ArrowsIcon.png";
-        private string _battleAxeIconPath = "/Demo2020;component/Resources/Images/BattleAxeIcon.png";
-        private string _bowIconPath = "/Demo2020;component/Resources/Images/BowIcon.png";
-        private string _crossbowIconPath = "/Demo2020;component/Resources/Images/CrossbowIcon.png";
-        private string _daggerIconPath = "/Demo2020;component/Resources/Images/DaggerIcon.png";
-        private string _hatchetIconPath = "/Demo2020;component/Resources/Images/HatchetIcon.png";
-        private string _potionIconPath = "/Demo2020;component/Resources/Images/PotionIcon.png";
-        private string _shieldIconPath = "/Demo2020;component/Resources/Images/ShieldIcon.png";
-        private string _spearIconPath = "/Demo2020;component/Resources/Images/SpearIcon.png";
-        private string _swordIconPath = "/Demo2020;component/Resources/Images/SwordIcon.png";
-        private string _wandIconPath = "/Demo2020;component/Resources/Images/WandIcon.png";
-        private string _warhammerIconPath = "/Demo2020;component/Resources/Images/WarhammerIcon.png";
+        [ObservableProperty] 
+        private IList<DescriptionModel> description;
+
+        [JsonProperty("equipment_category"),ObservableProperty] 
+        private ICategoryModel equipmentCategory;
+        
+        [JsonProperty("name")][ObservableProperty] 
+        private string name;
+
+
+        private string _armorIconPath = "/Demo2024;component/Resources/Images/ArmorIcon.png";
+        private string _arrowsIconPath = "/Demo2024;component/Resources/Images/ArrowsIcon.png";
+        private string _battleAxeIconPath = "/Demo2024;component/Resources/Images/BattleAxeIcon.png";
+        private string _bowIconPath = "/Demo2024;component/Resources/Images/BowIcon.png";
+        private string _crossbowIconPath = "/Demo2024;component/Resources/Images/CrossbowIcon.png";
+        private string _daggerIconPath = "/Demo2024;component/Resources/Images/DaggerIcon.png";
+        private string _hatchetIconPath = "/Demo2024;component/Resources/Images/HatchetIcon.png";
+        private string _potionIconPath = "/Demo2024;component/Resources/Images/PotionIcon.png";
+        private string _shieldIconPath = "/Demo2024;component/Resources/Images/ShieldIcon.png";
+        private string _spearIconPath = "/Demo2024;component/Resources/Images/SpearIcon.png";
+        private string _swordIconPath = "/Demo2024;component/Resources/Images/SwordIcon.png";
+        private string _wandIconPath = "/Demo2024;component/Resources/Images/WandIcon.png";
+        private string _warhammerIconPath = "/Demo2024;component/Resources/Images/WarhammerIcon.png";
 
         public MagicItemModel()
         {
             Description = new List<DescriptionModel>();
             EquipmentCategory = new CategoryModel();
-
-            
-            AddDescriptionCommand = new RelayCommand(AddDescription);
         }
 
         //**************************************************\\
         //******************** Methods *********************\\
         //**************************************************\\
 
+        [RelayCommand]
         private void AddDescription()
         {
             IList<DescriptionModel> descriptions = new List<DescriptionModel>();
@@ -66,59 +68,18 @@ namespace Demo2024.Biz.Equipment.Models
 
         public Guid Id { get; set; }
 
-        [JsonProperty("name")]
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        [JsonProperty("equipment_category")]
-        public ICategoryModel EquipmentCategory
-        {
-            get { return _equipmentCategory; }
-            set
-            {
-                if (_equipmentCategory != value)
-                {
-                    _equipmentCategory = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public IList<DescriptionModel> Description
-        {
-            get { return _description; }
-            set
-            {
-                if (_description != value)
-                {
-                    _description = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         // This implementation is messy. I want to clean this up in the near future. 
         [JsonProperty("desc")]
         public IList<string> StringDescription
         {
-            get { return _stringdescription; }
+            get { return _stringDescription; }
             set
             {
-                if (_stringdescription != value)
+                if (_stringDescription != value)
                 {
-                    _stringdescription = value;
+                    _stringDescription = value;
                     List<DescriptionModel> buffer = new List<DescriptionModel>();
-                    foreach (string s in _stringdescription)
+                    foreach (string s in _stringDescription)
                     {
                         buffer.Add(new DescriptionModel(s));
                     }
@@ -152,7 +113,5 @@ namespace Demo2024.Biz.Equipment.Models
             get { return _isDataComplete; }
             set { _isDataComplete = value; }
         }
-
-        public ICommand AddDescriptionCommand { get; set; }
     }
 }

@@ -1,8 +1,6 @@
-﻿using Demo2024.Biz.ActorCatalog.Interfaces;
-using Demo2024.Biz.Commons.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Demo2024.Biz.ActorCatalog.Interfaces;
 using Demo2024.Biz.MonsterManual.Interfaces;
-using System;
-using System.Linq;
 
 namespace Demo2024.Biz.ActorCatalog.Models
 {

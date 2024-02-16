@@ -1,132 +1,64 @@
-﻿using Demo2024.Biz.Commons.Models;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using Demo2024.Biz.Commons.Models;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Demo2024.Biz.Commons.ViewModels
+namespace Demo2024.Biz.Commons.ViewModels;
+
+public partial class MessageWindowViewModel : ObservableObject
 {
-    public class MessageWindowViewModel : ObservableObject
+    [ObservableProperty] private string title;
+    [ObservableProperty] private string message;
+    [ObservableProperty] private bool _isTrueFalseVisible;
+    [ObservableProperty] private bool _isOkVisible;
+ 
+    public MessageWindowViewModel(MessageWindowConfiguration config)
     {
-        //**************************************************\\
-        //********************* Fields *********************\\
-        //**************************************************\\
-        #region Fiels
-        private string _title;
-        private string _message;
-        private bool _isTrueFalseVisible;
-        private bool _isOkVisible;
-        #endregion
-
-        public MessageWindowViewModel(MessageWindowConfiguration config)
-        {
-            Title = config.Title;
-            Message = config.Message;
-            IsTrueFalseVisible = config.IsTrueFalseVisible;
-            IsOkVisible = config.IsOkVisible;
-            Token = config.Token;
-
-
-            OkCommand = new RelayCommand(Ok);
-            TrueCommand = new RelayCommand(True);
-            FalseCommand = new RelayCommand(False);
-        }
-
-        //**************************************************\\
-        //******************** Methods *********************\\
-        //**************************************************\\
-        #region Methods
-        private void Ok()
-        {
-            Close();
-        }
-
-        private void True()
-        {
-            // Send true message
-            Messenger.Default.Send(new MessageWindowResponse 
-            {
-                Response = true,
-                Token = Token
-            });
-            Close();
-        }
-
-        private void False()
-        {
-            // Send false message
-            Messenger.Default.Send(new MessageWindowResponse
-            {
-                Response = false,
-                Token = Token
-            });
-            Close();
-        }
-
-        private void Close()
-        {
-            Messenger.Default.Send(new CloseWindowMessage(this));
-        }
-        #endregion
-
-        //**************************************************\\
-        //******************* Properties *******************\\
-        //**************************************************\\
-        #region Properties
-        public ICommand OkCommand { get; set; }
-        public ICommand TrueCommand { get; set; }
-        public ICommand FalseCommand { get; set; }
-
-        public string Title 
-        {
-            get { return _title; }
-            set
-            {
-                if(_title != value)
-                {
-                    _title = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string Message
-        {
-            get { return _message; }
-            set
-            {
-                if (_message != value)
-                {
-                    _message = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsTrueFalseVisible
-        {
-            get { return _isTrueFalseVisible; }
-            set
-            {
-                if (_isTrueFalseVisible != value)
-                {
-                    _isTrueFalseVisible = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsOkVisible
-        {
-            get { return _isOkVisible; }
-            set
-            {
-                if (_isOkVisible != value)
-                {
-                    _isOkVisible = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public object Token { get; set; }
-        #endregion
+        Title = config.Title;
+        Message = config.Message;
+        IsTrueFalseVisible = config.IsTrueFalseVisible;
+        IsOkVisible = config.IsOkVisible;
+        Token = config.Token;
     }
+
+    [RelayCommand]    
+    private void Ok()
+    {
+        Close();
+    }
+
+    [RelayCommand]
+    private void True()
+    {
+        // Send true message
+        //Messenger.Default.Send(new MessageWindowResponse 
+        //{
+        //    Response = true,
+        //    Token = Token
+        //});
+        
+        //BAH - 2021-09-14 - Changed to use the new Register method
+        //Messenger.Register<MessageWindowViewModel, MessageWindowResponse>(this, static (r, m) => r.Response = true);
+
+        Close();
+    }
+
+    [RelayCommand]
+    private void False()
+    {
+        // Send false message
+        //Messenger.Default.Send(new MessageWindowResponse
+        //{
+        //    Response = false,
+        //    Token = Token
+        //});
+        Close();
+    }
+
+    private void Close()
+    {
+        //Messenger.Default.Send(new CloseWindowMessage(this));            
+    }
+
+    public object Token { get; set; }
 }

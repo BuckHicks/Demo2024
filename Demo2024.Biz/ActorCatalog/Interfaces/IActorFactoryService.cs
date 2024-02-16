@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Demo2024.Biz.ActorCatalog.Interfaces;
+﻿namespace Demo2024.Biz.ActorCatalog.Interfaces;
 
 public interface IActorFactoryService
 {

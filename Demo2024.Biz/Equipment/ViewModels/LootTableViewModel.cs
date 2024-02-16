@@ -1,4 +1,6 @@
-﻿using Demo2024.Biz.Commons.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.Equipment.Interfaces;
 using Demo2024.Biz.Equipment.Models;
 using System.Windows.Input;
