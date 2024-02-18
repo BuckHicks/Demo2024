@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Demo2024.Biz.MonsterManual.Interfaces;
 using Demo2024.Biz.MonsterManual.Models;
 
@@ -9,21 +10,21 @@ namespace Demo2024.Biz.MonsterManual.ViewModels
         //**************************************************\\
         //********************* Fields *********************\\
         //**************************************************\\
-        // Services
+
+        [ObservableProperty] private IMonsterModel currentMonster;
+        [ObservableProperty] private IList<IMonsterModel> monsters;
+        [ObservableProperty] private int selectedMonsterIndex = -1;
+        [ObservableProperty] private string editIconSource;
+        [ObservableProperty] private string filter = "";
+        [ObservableProperty] private bool isEditEnabled;
 
         private IMonsterFactoryService _monsterFactory;
         private IMonsterDataAccessService _monsterDataAccessObject;
         private IMonsterSearchAndFilterService _searchAndFilterService;
-        private IMonsterModel _currentMonster;
-        private IList<IMonsterModel> _monsters;
-        private IList<IMonsterModel> _monstersRaw;
-        private int _selectedMonsterIndex = -1;
-        private string _filter = "";
-        private bool _isEditEnabled;
-        private string _editIconSource;
-
-        private const string UNLOCKED_IMAGE_PATH = "/Demo2020;component/Resources/Images/UnlockIcon.png";
-        private const string LOCKED_IMAGE_PATH = "/Demo2020;component/Resources/Images/LockIcon.png";
+        private IList<IMonsterModel> _monstersRaw;        
+       
+        private const string UNLOCKED_IMAGE_PATH = "/Demo2024;component/Resources/Images/UnlockIcon.png";
+        private const string LOCKED_IMAGE_PATH = "/Demo2024;component/Resources/Images/LockIcon.png";
 
         public MonsterManualViewModel(IMonsterFactoryService monsterFactory, IMonsterDataAccessService monsterDataAccessObject, IMonsterSearchAndFilterService searchAndFilterService)
         {
@@ -31,8 +32,6 @@ namespace Demo2024.Biz.MonsterManual.ViewModels
             _monsterDataAccessObject = monsterDataAccessObject;
             _searchAndFilterService = searchAndFilterService;
 
-            ToggleEditCommand = new RelayCommand(ToggleEdit);
-            AddMonsterCommand = new RelayCommand(AddMonster);
             EditIconSource = LOCKED_IMAGE_PATH;
 
             Messenger.Default.Register<MessageWindowResponse>(this, "ReloadMonster", msg =>
@@ -84,9 +83,10 @@ namespace Demo2024.Biz.MonsterManual.ViewModels
             }
         }
 
+        [RelayCommand]
         private void ToggleEdit()
         {
-            if (_isEditEnabled)
+            if (IsEditEnabled)
             {
                 IsEditEnabled = false;
             }
@@ -96,6 +96,7 @@ namespace Demo2024.Biz.MonsterManual.ViewModels
             }
         }
 
+        [RelayCommand]
         private void AddMonster()
         {
             Monsters.Add(new MonsterModel
@@ -111,100 +112,23 @@ namespace Demo2024.Biz.MonsterManual.ViewModels
         //**************************************************\\
         //******************* Properties *******************\\
         //**************************************************\\
-        public int SelectedMonsterIndex
+        //https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
+        
+        partial void OnFilterChanged(string? value)
         {
-            get { return _selectedMonsterIndex; }
-            set
-            {
-                if (_selectedMonsterIndex != value)
-                {
-                    _selectedMonsterIndex = value;
-                    if (_selectedMonsterIndex > -1)
-                    {
-                        GetMonsterDetails();
-                    }
-                    OnPropertyChanged();
-                }
-            }
+            Monsters = _searchAndFilterService.Filter(_monstersRaw, Filter);
         }
 
-        public IMonsterModel CurrentMonster
+        partial void OnIsEditEnabledChanged(bool value)
         {
-            get { return _currentMonster; }
-            set
+            if (value)
             {
-                if (_currentMonster != value)
-                {
-                    _currentMonster = value;
-                    OnPropertyChanged();
-                }
+                EditIconSource = UNLOCKED_IMAGE_PATH;
+            }
+            else
+            {
+                EditIconSource = LOCKED_IMAGE_PATH;
             }
         }
-
-        public IList<IMonsterModel> Monsters
-        {
-            get { return _monsters; }
-            set
-            {
-                if (_monsters != value)
-                {
-                    _monsters = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string Filter
-        {
-            get { return _filter; }
-            set
-            {
-                if (_filter != value)
-                {
-                    _filter = value;
-                    Monsters = _searchAndFilterService.Filter(_monstersRaw, _filter);
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsEditEnabled
-        {
-            get { return _isEditEnabled; }
-            set
-            {
-                if (_isEditEnabled != value)
-                {
-                    _isEditEnabled = value;
-                    if (_isEditEnabled)
-                    {
-                        EditIconSource = UNLOCKED_IMAGE_PATH;
-                    }
-                    else
-                    {
-                        EditIconSource = LOCKED_IMAGE_PATH;
-                    }
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string EditIconSource
-        {
-            get { return _editIconSource; }
-            set
-            {
-                if (_editIconSource != value)
-                {
-                    _editIconSource = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ICommand ToggleEditCommand { get; set; }
-
-        public ICommand AddMonsterCommand { get; set; }
-
     }
 }
