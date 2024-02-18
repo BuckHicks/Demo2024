@@ -9,6 +9,8 @@ namespace Demo2024.Biz.MonsterManual.ViewModels
         //**************************************************\\
         //********************* Fields *********************\\
         //**************************************************\\
+        // Services
+
         private IMonsterFactoryService _monsterFactory;
         private IMonsterDataAccessService _monsterDataAccessObject;
         private IMonsterSearchAndFilterService _searchAndFilterService;
