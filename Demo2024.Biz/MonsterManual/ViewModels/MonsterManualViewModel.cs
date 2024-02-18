@@ -1,9 +1,10 @@
-﻿using Demo2024.Biz.MonsterManual.Interfaces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Demo2024.Biz.MonsterManual.Interfaces;
 using Demo2024.Biz.MonsterManual.Models;
 
 namespace Demo2024.Biz.MonsterManual.ViewModels
 {
-    public class MonsterManualViewModel : ObservableObject, IMonsterManualViewModel
+    public partial class MonsterManualViewModel : ObservableObject, IMonsterManualViewModel
     {
         //**************************************************\\
         //********************* Fields *********************\\
