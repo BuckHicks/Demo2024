@@ -9,8 +9,8 @@ public partial class MessageWindowViewModel : ObservableObject
 {
     [ObservableProperty] private string title;
     [ObservableProperty] private string message;
-    [ObservableProperty] private bool _isTrueFalseVisible;
-    [ObservableProperty] private bool _isOkVisible;
+    [ObservableProperty] private bool isTrueFalseVisible;
+    [ObservableProperty] private bool isOkVisible;
  
     public MessageWindowViewModel(MessageWindowConfiguration config)
     {
