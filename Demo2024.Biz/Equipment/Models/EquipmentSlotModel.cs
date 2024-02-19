@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.Equipment.Interfaces;
 using System.Windows.Input;
@@ -75,7 +76,7 @@ namespace Demo2024.Biz.Equipment.Models
         private void Remove()
         {
             
-            Messenger.Default.Send(this);
+            WeakReferenceMessenger.Default.Send(this);
         }
 
         //**************************************************\\

@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Demo2024.Biz.MonsterManual.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,10 +77,6 @@ namespace Demo2024.Biz.MonsterManual.Models
         {
             Speed = new SpeedModel();
             ArmorClass = new List<ArmorClassModel>();
-
-            AddCommand = new RelayCommand<string>(x => Add(x));
-            SubtractCommand = new RelayCommand<string>(x => Subtract(x));
-            AddArmorClassCommand = new RelayCommand(AddArmorClass);
         }
 
         //**************************************************\\
@@ -142,6 +141,7 @@ namespace Demo2024.Biz.MonsterManual.Models
             }
         }
 
+        [RelayCommand]
         private void Add(string ability)
         {
             switch (ability)
@@ -167,6 +167,7 @@ namespace Demo2024.Biz.MonsterManual.Models
             }
         }
 
+        [RelayCommand]
         private void Subtract(string ability)
         {
             switch (ability)
@@ -192,6 +193,7 @@ namespace Demo2024.Biz.MonsterManual.Models
             }
         }
 
+        [RelayCommand]
         private void AddArmorClass()
         {
             List<ArmorClassModel> armorClasses = new List<ArmorClassModel>();
@@ -235,8 +237,6 @@ namespace Demo2024.Biz.MonsterManual.Models
                 }
             }
         }
-
-        public ICommand AddArmorClassCommand { get; set; }
 
         [JsonProperty("type")]
         public string MonsterType
@@ -659,10 +659,7 @@ namespace Demo2024.Biz.MonsterManual.Models
                 }
             }
         }
-
-        public ICommand AddCommand { get; set; }
-
-        public ICommand SubtractCommand { get; set; }
+        
 
     }
 }

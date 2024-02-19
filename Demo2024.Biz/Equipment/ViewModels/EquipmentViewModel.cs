@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.Equipment.Interfaces;
 using System.Windows.Input;
@@ -24,6 +25,7 @@ namespace Demo2024.Biz.Equipment.ViewModels
         private int _selectedEquipmentIndex = -1;
         private bool _isEditEnabled;
         private string _editIconSource;
+        private StrongReferenceMessenger messenger;
 
         private const string UNLOCKED_IMAGE_PATH = "/Demo2020;component/Resources/Images/UnlockIcon.png";
         private const string LOCKED_IMAGE_PATH = "/Demo2020;component/Resources/Images/LockIcon.png";
@@ -35,13 +37,11 @@ namespace Demo2024.Biz.Equipment.ViewModels
             //_equipmentDataAccessService = equipmentDataAccessObject;
             //_equipmentSearchAndFilter = equipmentSearchAndFilter;
 
-
-            
             SaveCommand = new RelayCommand(SaveEquipment);
 
-            Messenger.Default.Register<MessageWindowResponse>(this, "GetEquipmentDetails", msg =>
+            WeakReferenceMessenger.Default.Register<EquipmentViewModel, MessageWindowResponse, string>(this, "GetEquipmentDetails", (recipient, message) =>
             {
-                if (msg.Response)
+                if (message.Response)
                 {
                     GetEquipmentDetailsAsync();
                 }
@@ -85,7 +85,7 @@ namespace Demo2024.Biz.Equipment.ViewModels
                 if (Equipment[SelectedEquipmentIndex] == null)
                 {
                     Equipment[SelectedEquipmentIndex] = CurrentEquipment;
-                    Messenger.Default.Send(new MessageWindowConfiguration
+                    WeakReferenceMessenger.Default.Send(new MessageWindowConfiguration
                     {
                         Message = "An error occurred while getting " + CurrentEquipment.Name + " data. Would you like to try again? " +
                         "Check you internet connection if you continue to see this message.",

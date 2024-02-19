@@ -1,4 +1,5 @@
-﻿using Demo2024.Biz.Commons.Models;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.Equipment.Interfaces;
 
 namespace Demo2024.Biz.Equipment.Models
@@ -20,7 +21,7 @@ namespace Demo2024.Biz.Equipment.Models
             EquipmentSlots = new List<IEquipmentSlotModel>();
 
             
-            Messenger.Default.Register<EquipmentSlotModel>(this, msg => { RemoveEquipmentSlot(msg); });
+            WeakReferenceMessenger.Default.Register<EquipmentSlotModel>(this, (recipient, message) => { RemoveEquipmentSlot(message); });
         }
 
         private void RemoveEquipmentSlot(EquipmentSlotModel model)

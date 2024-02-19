@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.Equipment.Interfaces;
 using System.Windows.Input;
@@ -38,9 +39,9 @@ namespace Demo2024.Biz.Equipment.ViewModels
             
             ToggleEditCommand = new RelayCommand(ToggleEdit);
 
-            Messenger.Default.Register<MessageWindowResponse>(this, "GetMagicItemDetails", msg =>
+            WeakReferenceMessenger.Default.Register<MagicItemViewModel, MessageWindowResponse, string>(this, "GetMagicItemDetails", (recipient, message) =>
             {
-                if (msg.Response)
+                if (message.Response)
                 {
                     GetMagicItemDetails();
                 }
@@ -79,7 +80,7 @@ namespace Demo2024.Biz.Equipment.ViewModels
                 {
                     MagicItems[SelectedMagicItemIndex] = CurrentMagicItem;
 
-                    Messenger.Default.Send(new MessageWindowConfiguration
+                    WeakReferenceMessenger.Default.Send(new MessageWindowConfiguration
                     {
                         Message = "An error occurred while getting " + CurrentMagicItem.Name + " data. Would you like to try again? " +
                         "Check you internet connection if you continue to see this message.",

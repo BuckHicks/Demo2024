@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.MonsterManual.Interfaces;
 using Demo2024.Biz.MonsterManual.Models;
 
@@ -34,9 +36,9 @@ public partial class MonsterManualViewModel : ObservableObject, IMonsterManualVi
 
         EditIconSource = LOCKED_IMAGE_PATH;
 
-        Messenger.Default.Register<MessageWindowResponse>(this, "ReloadMonster", msg =>
+        WeakReferenceMessenger.Default.Register<MonsterManualViewModel, MessageWindowResponse, string>(this, "ReloadMonster", (recipient, message) =>
         {
-            if (msg.Response)
+            if (message.Response)
             {
                 GetMonsterDetails();
             }
@@ -66,7 +68,7 @@ public partial class MonsterManualViewModel : ObservableObject, IMonsterManualVi
             if (Monsters[SelectedMonsterIndex] == null)
             {
                 Monsters[SelectedMonsterIndex] = CurrentMonster;
-                Messenger.Default.Send(new MessageWindowConfiguration
+                WeakReferenceMessenger.Default.Send(new MessageWindowConfiguration
                 {
                     Message = "An error occurred while getting " + CurrentMonster.Name + " data. Would you like to try again? " +
                     "Check you internet connection if you continue to see this message.",

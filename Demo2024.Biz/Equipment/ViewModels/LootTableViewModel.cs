@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.Equipment.Interfaces;
 using Demo2024.Biz.Equipment.Models;
@@ -44,9 +45,9 @@ namespace Demo2024.Biz.Equipment.ViewModels
             EditIconSource = LOCKED_IMAGE_PATH;
             
 
-            Messenger.Default.Register<MessageWindowResponse>(this, "GetLootTableDetails", msg =>
+            WeakReferenceMessenger.Default.Register<LootTableViewModel, MessageWindowResponse, string>(this, "GetLootTableDetails", (recipient, message) =>
             {
-                if (msg.Response)
+                if (message.Response)
                 {
                     GetLootTableDetails();
                 }
@@ -75,7 +76,7 @@ namespace Demo2024.Biz.Equipment.ViewModels
                 {
                     LootTables[SelectedLootTableIndex] = CurrentLootTable;
 
-                    Messenger.Default.Send(new MessageWindowConfiguration
+                    WeakReferenceMessenger.Default.Send(new MessageWindowConfiguration
                     {
                         Message = "An error occurred while getting " + CurrentLootTable.Name + " data. Would you like to try again? " +
                         "Check you internet connection if you continue to see this message.",
