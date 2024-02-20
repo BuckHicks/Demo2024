@@ -6,10 +6,10 @@ namespace Demo2024
     {
         int count = 0;
 
-        public MainPage(IMainViewModel mainViewModel)
+        public MainPage(/*IMainViewModel mainViewModel*/)
         {
             InitializeComponent();
-            BindingContext = mainViewModel;
+            //BindingContext = mainViewModel;
         }
 
         private void OnCounterClicked(object sender, EventArgs e)

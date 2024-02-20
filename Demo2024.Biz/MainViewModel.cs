@@ -20,14 +20,14 @@ public class MainViewModel : ObservableObject, IMainViewModel
     private ILootTableViewModel _lootTableViewModel;
     private IActorCatalogViewModel _actorCatalogViewModel;
 
-    public MainViewModel(IMonsterManualViewModel monsterManualViewModel, IEquipmentViewModel equipmentViewModel, IMagicItemViewModel magicItemViewModel,
-        ILootTableViewModel lootTableViewModel, IActorCatalogViewModel actorCatalogViewModel)
+    public MainViewModel(/*IMonsterManualViewModel monsterManualViewModel, IEquipmentViewModel equipmentViewModel, IMagicItemViewModel magicItemViewModel,
+        ILootTableViewModel lootTableViewModel, IActorCatalogViewModel actorCatalogViewModel*/)
     {
-        _monsterManualViewModel = monsterManualViewModel;
-        _equipmentViewModel = equipmentViewModel;
-        _magicItemViewModel = magicItemViewModel;
-        _lootTableViewModel = lootTableViewModel;
-        _actorCatalogViewModel = actorCatalogViewModel;
+        //_monsterManualViewModel = monsterManualViewModel;
+        //_equipmentViewModel = equipmentViewModel;
+        //_magicItemViewModel = magicItemViewModel;
+        //_lootTableViewModel = lootTableViewModel;
+        //_actorCatalogViewModel = actorCatalogViewModel;
 
         MonsterManualCommand = new RelayCommand<ObservableObject>(x => ChangeView((ObservableObject)_monsterManualViewModel));
         EquipmentCommand = new RelayCommand<ObservableObject>(x => ChangeView((ObservableObject)_equipmentViewModel));
