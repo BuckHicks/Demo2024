@@ -1,9 +1,9 @@
 ﻿using Demo2024.Data.Interfaces;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Configuration;
 using System.Data;
-using System.Data.SQLite;
 
 namespace Demo2024.Data.Services
 {
@@ -20,7 +20,7 @@ namespace Demo2024.Data.Services
 
             try
             {
-                using (IDbConnection cnn = new SQLiteConnection(GetConnectionString()))
+                using (IDbConnection cnn = new SqliteConnection(GetConnectionString()))
                 {
                     using (var command = cnn.CreateCommand())
                     {
@@ -61,7 +61,7 @@ namespace Demo2024.Data.Services
 
             try
             {
-                using (IDbConnection cnn = new SQLiteConnection(GetConnectionString()))
+                using (IDbConnection cnn = new SqliteConnection(GetConnectionString()))
                 {
                     using (var command = cnn.CreateCommand())
                     {

@@ -1,4 +1,5 @@
-﻿using Demo2024.Biz.Commons.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Demo2024.Biz.Commons.Models;
 using Demo2024.Biz.Equipment.Interfaces;
 using Newtonsoft.Json;
 

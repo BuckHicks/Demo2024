@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
 
-namespace Demo2024.Biz.MonsterManual.Models
+namespace Demo2024.Biz.MonsterManual.Models;
+
+public class ProficiencyModel
 {
-    public class ProficiencyModel
-    {
 
-        [JsonProperty("value")]
-        public long Value { get; set; }
+    [JsonProperty("value")]
+    public long Value { get; set; }
 
-        [JsonProperty("proficiency")]
-        public ProficiencyElementModel Element { get; set; }
-    }
+    [JsonProperty("proficiency")]
+    public ProficiencyElementModel Element { get; set; }
 }

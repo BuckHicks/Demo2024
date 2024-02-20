@@ -116,7 +116,7 @@ public partial class MonsterManualViewModel : ObservableObject, IMonsterManualVi
     //**************************************************\\
     //https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
     
-    partial void OnFilterChanged(string? value)
+    partial void OnFilterChanged(string value)
     {
         Monsters = _searchAndFilterService.Filter(_monstersRaw, Filter);
     }

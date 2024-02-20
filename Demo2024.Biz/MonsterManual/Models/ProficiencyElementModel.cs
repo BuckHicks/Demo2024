@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 
-namespace Demo2024.Biz.MonsterManual.Models
+namespace Demo2024.Biz.MonsterManual.Models;
+
+public class ProficiencyElementModel
 {
-    public class ProficiencyElementModel
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-    }
+    [JsonProperty("name")]
+    public string Name { get; set; }
 }
