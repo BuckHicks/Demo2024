@@ -1,12 +1,15 @@
-﻿namespace Demo2024
+﻿using Demo2024.Biz.Commons.Interfaces;
+
+namespace Demo2024
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
 
-        public MainPage()
+        public MainPage(IMainViewModel mainViewModel)
         {
             InitializeComponent();
+            BindingContext = mainViewModel;
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
