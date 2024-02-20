@@ -9,7 +9,7 @@
 
             <Image Aspect="AspectFill"
                    HeightRequest="185"
-                   Source="splash.png" />
+                   Source="hammer.png" />
 
             <Label
                 SemanticProperties.HeadingLevel="Level1"

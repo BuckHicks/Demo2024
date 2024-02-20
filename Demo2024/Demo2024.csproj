@@ -59,7 +59,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\splash.png" />
+	  <None Remove="Resources\Images\hammer.png" />
 	</ItemGroup>
 
 	<ItemGroup>
